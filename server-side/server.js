@@ -36,8 +36,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 export const __esModule = true;
-import { readFile } from "fs/promises";
+import { readFile, writeFile, appendFile, rename, unlink, rmdir } from "fs/promises";
 import { join } from "path";
+import { existsSync } from "fs";
 var file = process.cwd();
 var readMe = function () {
     return __awaiter(void 0, void 0, void 0, function () {
@@ -45,24 +46,47 @@ var readMe = function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, (0, readFile)((0, join)(file, 'server-side', './lore.txt'), 'utf-8')];
+                    _a.trys.push([0, 10, , 11]);
+                    return [4 /*yield*/, (0, readFile)((0, join)(file, 'server-side', './lorem.txt'), 'utf-8')];
                 case 1:
                     data = _a.sent();
                     console.log(data);
-                    return [3 /*break*/, 3];
+                    return [4 /*yield*/, (0, writeFile)((0, join)(file, 'server-side', './write.txt'), 'I am writing this to memory')];
                 case 2:
+                    _a.sent();
+                    return [4 /*yield*/, (0, appendFile)((0, join)(file, 'server-side', './write.txt'), '\nI am appending this to memory')];
+                case 3:
+                    _a.sent();
+                    return [4 /*yield*/, (0, rename)((0, join)(file, 'server-side', './write.txt'), (0, join)(file, 'server-side', './rename.txt'))];
+                case 4:
+                    _a.sent();
+                    return [4 /*yield*/, (0, unlink)((0, join)(file, 'server-side', './delete.md'))];
+                case 5:
+                    _a.sent();
+                    return [4 /*yield*/, (0, writeFile)((0, join)(file, 'server-side', './delete.md'), 'I am creating a deleted file')];
+                case 6:
+                    _a.sent();
+                    if (!(0, existsSync)('./server-side/new-Dir')) return [3 /*break*/, 8];
+                    return [4 /*yield*/, (0, rmdir)('./server-side/new-Dir')];
+                case 7:
+                    _a.sent();
+                    console.log("Directory has been deleted!");
+                    return [3 /*break*/, 9];
+                case 8:
+                    console.log("\nDirectory does not exits");
+                    _a.label = 9;
+                case 9: return [3 /*break*/, 11];
+                case 10:
                     err_1 = _a.sent();
                     console.log(err_1);
-                    return [3 /*break*/, 3];
-                case 3:
-                    process.on('uncaughtException', function (err) {
-                        console.log("error was caught. ".concat(err));
-                        process.exit(1);
-                    });
-                    return [2 /*return*/];
+                    return [3 /*break*/, 11];
+                case 11: return [2 /*return*/];
             }
         });
     });
 };
+process.on('uncaughtException', function (err) {
+    console.log("error was caught. ".concat(err));
+    process.exit(1);
+});
 readMe();
